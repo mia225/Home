@@ -10,7 +10,7 @@ class Product(models.Model):
     description = models.TextField()
     countInStock = models.IntegerField()
     image = models.ImageField(upload_to='product_images/')
-    createdAt = models.DateField(auto_now_add=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Product Name: {self.product_name} | Available Stock: {self.countInStock}"
@@ -61,4 +61,3 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return f'{self.full_name} - {self.address}'
-

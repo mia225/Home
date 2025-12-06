@@ -1,14 +1,21 @@
 from django.urls import path
-from . import views
+from .views import get_products, get_product_detail, register_user, logout_user, profile_view
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView
+)
+
 
 urlpatterns = [
-    # Products
-    path('products/', views.get_products, name='products'),
-    path('products/<int:pk>/', views.get_product_details, name='product_details'),
+    path('register/', register_user, name="register"),
+    path('logout/', logout_user, name="logout"),
+    path('profile/', profile_view, name="profile"),
 
-    # Cart
-    path('cart/', views.read_cart, name='read_cart'),
-    path('cart/add/', views.add_to_cart, name='add_to_cart'),
-    path('cart/update/<int:pk>/',views.update_cart, name='update_cart'),
-    path('cart/remove/<int:pk>/',views.remove_from_cart, name='remove_from_cart'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    path('products/',get_products, name="products"),     
+    path('product/<int:pk>/', get_product_detail, name="product-detail"),   
 ]
+

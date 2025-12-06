@@ -1,43 +1,70 @@
-import React from "react";
-import {Link} from "react-router-dom"
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { FaShoppingCart, FaUserCircle } from "react-icons/fa"; // Icons
+import rivan_logo from "../assets/rivan_logo.png";
+import { AuthContext } from "../context/AuthProvider";
 
 const Header = () => {
-  return (
-    <header className="w-full bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <h1 className="text-xl font-extrabold text-gray-900 tracking-wide">
-          RIVANSH
-        </h1>
+  const { isAuthenticated } = useContext(AuthContext);
 
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
-          <Link to="/" className="hover:text-blue-800 transition">Home</Link>
-          <Link to="/products" className="hover:text-blue-800 transition">Products</Link>
-          <Link to="/team" className="hover:text-blue-800 transition">Team</Link>
-        {/* Buttons */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Link
-            to="/register"
-            className="border border-blue-900 text-blue-900 px-5 py-2 rounded-lg hover:bg-blue-50 transition"
-          >
-            Register
-          </Link>
-          <Link
-            href="#signin"
-            className="bg-blue-900 text-white px-5 py-2 rounded-lg hover:bg-blue-800 transition"
-          >
-            Sign In
-          </Link>
+  return (
+    <header className="flex justify-around items-center px-8 py-4 shadow-md">
+      {/* Logo Section */}
+      <Link to="/">
+        <div className="flex items-center space-x-2">
+          <img src={rivan_logo} alt="Logo" className="w-15 h-15" />
+          <span className="font-bold text-xl">RIVANSHOP</span>
         </div>
+      </Link>
+
+      {/* Buttons */}
+      <div className="flex items-center space-x-3">
+        {/* Navigation */}
+        <nav className="flex items-center space-x-6 text-sm">
+          <Link to="/" className="hover:text-primary-hover">
+            Home
+          </Link>
+          <Link to="/products" className="hover:text-primary-hover">
+            Products
+          </Link>
+          <Link to="#" className="hover:text-primary-hover">
+            Team
+          </Link>
         </nav>
 
-        
-
-        {/* Mobile menu icon placeholder (optional for later) */}
-        <button className="md:hidden text-gray-700 focus:outline-none">
-          ☰
-        </button>
+        {/* Icons */}
+        {isAuthenticated ? (
+          <>
+            <Link
+              to="/cart"
+              className="text-xl text-primary hover:text-primary-hover"
+            >
+              <FaShoppingCart />
+            </Link>
+            <Link
+              to="/profile"
+              className="text-xl text-primary hover:text-primary-hover"
+            >
+              <FaUserCircle />
+            </Link>
+          </>
+        ) : (
+          <>
+            {/* Auth Buttons */}
+            <Link
+              to="/register"
+              className="border border-primary text-primary px-4 py-1 rounded-full hover:bg-blue-50 text-sm"
+            >
+              Register
+            </Link>
+            <Link
+              to="/login"
+              className="bg-primary text-black px-4 py-1 rounded-full hover:bg-primary-hover text-sm"
+            >
+              Sign In
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );
